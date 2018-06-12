@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f77c9c750b6a71144ba2c40125332bee
-timeCreated: 1528834151
+timeCreated: 1528845127
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -11,8 +11,6 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Crystal Base
-    7400000: Take 001
-    9500000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -87,7 +85,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

@@ -1,61 +1,58 @@
 fileFormatVersion: 2
 guid: 107a4230e2746df4aad6a122e1e5e032
-timeCreated: 1528834151
+timeCreated: 1528845127
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Character
-    100004: Skeleton_Joint
-    100006: Skeleton_Joint (10)
-    100008: Skeleton_Joint (11)
-    100010: Skeleton_Joint (12)
-    100012: Skeleton_Joint (13)
-    100014: Skeleton_Joint (14)
-    100016: Skeleton_Joint (15)
-    100018: Skeleton_Joint (16)
-    100020: Skeleton_Joint (17)
-    100022: Skeleton_Joint (18)
-    100024: Skeleton_Joint (19)
-    100026: Skeleton_Joint (2)
-    100028: Skeleton_Joint (20)
-    100030: Skeleton_Joint (3)
-    100032: Skeleton_Joint (4)
-    100034: Skeleton_Joint (5)
-    100036: Skeleton_Joint (6)
-    100038: Skeleton_Joint (7)
-    100040: Skeleton_Joint (8)
-    100042: Skeleton_Joint (9)
-    100044: Texture Group
+    100002: Skeleton_Joint
+    100004: Skeleton_Joint (10)
+    100006: Skeleton_Joint (11)
+    100008: Skeleton_Joint (12)
+    100010: Skeleton_Joint (13)
+    100012: Skeleton_Joint (14)
+    100014: Skeleton_Joint (15)
+    100016: Skeleton_Joint (16)
+    100018: Skeleton_Joint (17)
+    100020: Skeleton_Joint (18)
+    100022: Skeleton_Joint (19)
+    100024: Skeleton_Joint (2)
+    100026: Skeleton_Joint (20)
+    100028: Skeleton_Joint (3)
+    100030: Skeleton_Joint (4)
+    100032: Skeleton_Joint (5)
+    100034: Skeleton_Joint (6)
+    100036: Skeleton_Joint (7)
+    100038: Skeleton_Joint (8)
+    100040: Skeleton_Joint (9)
     400000: //RootNode
-    400002: Character
-    400004: Skeleton_Joint
-    400006: Skeleton_Joint (10)
-    400008: Skeleton_Joint (11)
-    400010: Skeleton_Joint (12)
-    400012: Skeleton_Joint (13)
-    400014: Skeleton_Joint (14)
-    400016: Skeleton_Joint (15)
-    400018: Skeleton_Joint (16)
-    400020: Skeleton_Joint (17)
-    400022: Skeleton_Joint (18)
-    400024: Skeleton_Joint (19)
-    400026: Skeleton_Joint (2)
-    400028: Skeleton_Joint (20)
-    400030: Skeleton_Joint (3)
-    400032: Skeleton_Joint (4)
-    400034: Skeleton_Joint (5)
-    400036: Skeleton_Joint (6)
-    400038: Skeleton_Joint (7)
-    400040: Skeleton_Joint (8)
-    400042: Skeleton_Joint (9)
-    400044: Texture Group
+    400002: Skeleton_Joint
+    400004: Skeleton_Joint (10)
+    400006: Skeleton_Joint (11)
+    400008: Skeleton_Joint (12)
+    400010: Skeleton_Joint (13)
+    400012: Skeleton_Joint (14)
+    400014: Skeleton_Joint (15)
+    400016: Skeleton_Joint (16)
+    400018: Skeleton_Joint (17)
+    400020: Skeleton_Joint (18)
+    400022: Skeleton_Joint (19)
+    400024: Skeleton_Joint (2)
+    400026: Skeleton_Joint (20)
+    400028: Skeleton_Joint (3)
+    400030: Skeleton_Joint (4)
+    400032: Skeleton_Joint (5)
+    400034: Skeleton_Joint (6)
+    400036: Skeleton_Joint (7)
+    400038: Skeleton_Joint (8)
+    400040: Skeleton_Joint (9)
     2100000: No Name
     4300000: Character
-    7400000: Take 001
+    7400000: Running
+    7400002: Attack
     9500000: //RootNode
-    13700000: Character
+    13700000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
