@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour {
     [SerializeField]
     int Damage = 100;
     [SerializeField]
-    Minion Wielder = null;
+    BaseObject Wielder = null;
     private void OnCollisionEnter(Collision collision)
     {
 
