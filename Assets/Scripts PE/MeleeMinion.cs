@@ -11,6 +11,9 @@ public class MeleeMinion : Minion {
     [SerializeField]
     string goalname;
     // Use this for initialization
+    public string team;
+    public Animator anim;
+
 
     void IsOnNavMesh(NavMeshAgent agent)
     {
@@ -27,14 +30,14 @@ public class MeleeMinion : Minion {
         }
     }
 
-
+    NavMeshAgent agent;
     void Start () {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-
+        agent = GetComponent<NavMeshAgent>();
+        anim = GetComponentInParent<Animator>();
         IsOnNavMesh(agent);
 
         goal = GameObject.Find(goalname).transform;
-        agent.destination = goal.position;
+        agent.destination = goal.localPosition;
     }
     //Constructor for melee minion
     public MeleeMinion(float hp, float maxhp)
@@ -42,6 +45,7 @@ public class MeleeMinion : Minion {
         CurrentHP = hp;
         MaxHP = maxhp;
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Player")
@@ -54,8 +58,28 @@ public class MeleeMinion : Minion {
         }
         
     }
-    
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+        if(other.gameObject.tag == "Player")
+        {
+            agent.destination = other.transform.position;
+        }
+        else if(other.gameObject.tag == "Minion")
+        {
+            MeleeMinion m = other.GetComponentInChildren<MeleeMinion>();
+            if(team != m.team)
+            {
+                agent.destination = m.transform.localPosition;
+            }
+        }
+        else
+        {
+            goal = GameObject.Find(goalname).transform;
+            agent.destination = goal.localPosition;
+        }
+    }
     public override void ApplyDamage(float damage = 0)
     {
 

@@ -14,6 +14,8 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     float timer;
     [SerializeField]
+    float groupTimer;
+    [SerializeField]
     int groupSize = 5;
     public int redTeamCount;
     public int blueTeamCount;
@@ -32,20 +34,24 @@ public class Spawner : MonoBehaviour {
         
         if(timer <= 0)
         {
-            //for(int i = 0; i < groupSize; i++)
-            //{
-            //    GameObject redMinion = Instantiate(Minions[0], SpawnPoints[0]);
-            //    redMinion = Instantiate(Minions[1], SpawnPoints[1]);
-            //    redMinion = Instantiate(Minions[2], SpawnPoints[2]);
-            //    redTeamCount++;
-            //    
-            //    //GameObject blueMinion = Instantiate(Minions[1], SpawnPoints[1]);
-            //    //blueTeamCount++;
-            //}
-            GameObject redMinion = Instantiate(Minions[0], SpawnPoints[0]);
-            //Debug.Log(SpawnPoints[0].transform.position);
+            for (int i = 0; i < groupSize; i++)
+            {
+                GameObject redMinion = Instantiate(Minions[0], SpawnPoints[0]);
+                redMinion.transform.position = SpawnPoints[0].position;
+                redMinion = Instantiate(Minions[1], SpawnPoints[1]);
+                redMinion.transform.position = SpawnPoints[1].position;
+                redMinion = Instantiate(Minions[2], SpawnPoints[2]);
+                redMinion.transform.position = SpawnPoints[2].position;
+                redTeamCount += 3;
 
-            redMinion.transform.position = SpawnPoints[0].position;
+                //GameObject blueMinion = Instantiate(Minions[1], SpawnPoints[1]);
+                //blueTeamCount++;
+            }
+            //GameObject redMinion = Instantiate(Minions[0], SpawnPoints[0]);
+            //redMinion.transform.position = SpawnPoints[0].position;
+            Debug.Log(SpawnPoints[0].transform.position);
+
+            
             timer = spawnTimer;
         }
 

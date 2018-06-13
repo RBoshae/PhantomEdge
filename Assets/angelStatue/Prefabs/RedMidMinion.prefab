@@ -272,6 +272,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1804769884055984
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4552448766675448}
+  - component: {fileID: 135468645277693700}
+  m_Layer: 0
+  m_Name: DetectionBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1821571276056098
 GameObject:
   m_ObjectHideFlags: 1
@@ -387,6 +403,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4274604394727186}
+  - {fileID: 4552448766675448}
   m_Father: {fileID: 4102795430497554}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -397,7 +414,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1627049331407036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 130.2175, y: -84.86575, z: -402.19235}
+  m_LocalPosition: {x: 310.51456, y: -40.82, z: -220.32324}
   m_LocalScale: {x: 2.409215, y: 2.4092147, z: 2.4092147}
   m_Children:
   - {fileID: 4034893463617184}
@@ -541,6 +558,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4102795430497554}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4552448766675448
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1804769884055984}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4034893463617184}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4598706682067542
@@ -730,6 +760,18 @@ MonoBehaviour:
   MaxHP: 0
   goal: {fileID: 0}
   goalname: BlueNexus
+--- !u!135 &135468645277693700
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1804769884055984}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136032075544848612
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -811,8 +853,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 1016878964818224}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.99131066
-  m_Speed: 3.5
+  m_Radius: 1
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
