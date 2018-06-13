@@ -14,4 +14,6 @@ public static class GlobalRefs {
     public static Nexus redNexus;
     public static Nexus blueNexus;
     public static List<Text> PlayerViewText = new List<Text>();
+    public static GameObject Gun;
+    public static GameObject Sword;
 }
