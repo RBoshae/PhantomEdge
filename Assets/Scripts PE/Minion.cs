@@ -141,7 +141,7 @@ public abstract class Minion : MonoBehaviour {
             }
             // Check the closest minion out of all minions closeby
             Minion minion = hit.GetComponent<Minion>();
-            if (minion)
+            if (minion && minion.team != team)
             {
                 float curDist = Vector3.Distance(minion.transform.position, transform.position);
                 if (curDist < minDist)
