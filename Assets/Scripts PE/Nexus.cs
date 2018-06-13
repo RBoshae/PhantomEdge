@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Nexus : BaseObject {
 
-	// Use this for initialization
-	void Start () {
+    protected void Awake () {
 	    switch (team)
         {
             case Teams.red:

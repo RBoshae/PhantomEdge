@@ -12,11 +12,12 @@ public class MainPlayer : MonoBehaviour {
     private int HP = 10;
     [SerializeField]
     private int MaxHP = 10;
+    public Teams team = Teams.blue;
     [SerializeField]
     private Image BloodyPeripheral;
     private Transform CenterEye;
 
-    public void Damage(int damage, float knockbackDist = 0)
+    public bool ApplyDamage(int damage, float knockbackDist = 0)
     {
         HP -= damage;
         if (HP <= 0)
@@ -24,17 +25,16 @@ public class MainPlayer : MonoBehaviour {
             Teleport(GlobalRefs.PlayerRoomSpawn.position, GlobalRefs.PlayerRoomSpawn.rotation, false, new Color(0.2f, 0, 0));
             HP = MaxHP;
             BloodyPeripheral.color = new Color(1, 1, 1, 0);
+            return true;
         }
-        else
+        if (knockbackDist > 0)
         {
-            if (knockbackDist > 0)
-            {
-                Vector3 forward = new Vector3(CenterEye.forward.x, 0, CenterEye.forward.z).normalized;
-                Teleport(CenterEye.position - (forward * knockbackDist), new Quaternion(), false, new Color(0.4f, 0, 0));
-            }
-            float HPpercent = 1 - (((float)HP) / MaxHP);
-            BloodyPeripheral.color = new Color(1, 1, 1, HPpercent);
+            Vector3 forward = new Vector3(CenterEye.forward.x, 0, CenterEye.forward.z).normalized;
+            Teleport(CenterEye.position - (forward * knockbackDist), new Quaternion(), false, new Color(0.4f, 0, 0));
         }
+        float HPpercent = 1 - (((float)HP) / MaxHP);
+        BloodyPeripheral.color = new Color(1, 1, 1, HPpercent);
+        return false;
     }
 
     private void Start()

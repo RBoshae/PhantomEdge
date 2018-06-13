@@ -8,12 +8,12 @@ public class BaseObject : MonoBehaviour
     public Teams team = Teams.red;
     public int CurrentHP;
     [SerializeField]
-    private int MaxHP = 10;
+    protected int MaxHP = 10;
     [SerializeField]
-    private ParticleSystem normalParticles;
+    protected ParticleSystem normalParticles;
     [SerializeField]
-    private ParticleSystem DestroyParticles;
-    private bool dead = false;
+    protected ParticleSystem DestroyParticles;
+    protected bool dead = false;
 
     public virtual void ApplyDamage(int damage = 0)
     {
@@ -27,7 +27,7 @@ public class BaseObject : MonoBehaviour
         }
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         CurrentHP = MaxHP;
     }

@@ -12,7 +12,7 @@ public abstract class Minion : MonoBehaviour {
     [SerializeField]
     protected float MaxHP = 2;
     [SerializeField]
-    public Transform goal;
+    private Transform _goal;
     [SerializeField]
     string goalname;
     [SerializeField]
@@ -24,7 +24,18 @@ public abstract class Minion : MonoBehaviour {
     private Rigidbody rb;
     private float InitialAnimatorSpeed;
 
-    public void ApplyDamage(int damage = 0)
+    public Transform goal
+    {
+        get {
+            return _goal;
+        }
+        set {
+            _goal = value;
+            agent.destination = value.localPosition;
+        }
+    }
+
+    public bool ApplyDamage(int damage = 0)
     {
         CurrentHP -= damage;
 
@@ -42,7 +53,9 @@ public abstract class Minion : MonoBehaviour {
                     break;
             }
             StartCoroutine(DeathAnimation());
+            return true;
         }
+        return false;
     }
 
     public void KnockBack(float dist)
@@ -50,7 +63,11 @@ public abstract class Minion : MonoBehaviour {
         state = MinionState.knockback;
         agent.enabled = false;
         anim.speed = 0;
+    }
 
+    public void KilledEnemy()
+    {
+        
     }
 
     protected void IsOnNavMesh(NavMeshAgent agent)
@@ -73,8 +90,7 @@ public abstract class Minion : MonoBehaviour {
         CurrentHP = MaxHP;
         agent = GetComponent<NavMeshAgent>();
         IsOnNavMesh(agent);
-
-        agent.destination = goal.localPosition;
+        
         anim = transform.parent.GetComponent<Animator>();
         state = MinionState.attacking;
         rb = GetComponent<Rigidbody>();
@@ -100,5 +116,20 @@ public abstract class Minion : MonoBehaviour {
             yield return null;
         }
         Destroy(this.gameObject);
+    }
+
+    private void FollowNexus()
+    {
+        switch (team)
+        {
+            case Teams.red:
+                goal = GlobalRefs.blueNexus.transform;
+                break;
+            case Teams.blue:
+                goal = GlobalRefs.redNexus.transform;
+                break;
+            default:
+                break;
+        }
     }
 }
