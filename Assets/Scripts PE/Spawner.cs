@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Teams { red, blue };
+
 public class Spawner : MonoBehaviour {
 
     // Use this for initialization
@@ -17,11 +19,13 @@ public class Spawner : MonoBehaviour {
     float groupTimer;
     [SerializeField]
     int groupSize = 5;
-    public int redTeamCount;
-    public int blueTeamCount;
+    public int redTeamCount = 0;
+    public int blueTeamCount = 0;
+    public int maxTeamSize = 0;
 
     void Start () {
         timer = spawnTimer;
+        GlobalRefs.Spawner = this;
 		if(Minions.Length == 0)
         {
             Application.Quit();
@@ -36,25 +40,35 @@ public class Spawner : MonoBehaviour {
         {
             for (int i = 0; i < groupSize; i++)
             {
-                GameObject redMinion = Instantiate(Minions[0], SpawnPoints[0]);
-                redMinion.transform.position = SpawnPoints[0].position;
-                redMinion = Instantiate(Minions[1], SpawnPoints[1]);
-                redMinion.transform.position = SpawnPoints[1].position;
-                redMinion = Instantiate(Minions[2], SpawnPoints[2]);
-                redMinion.transform.position = SpawnPoints[2].position;
-                redTeamCount += 3;
-
-                //GameObject blueMinion = Instantiate(Minions[1], SpawnPoints[1]);
-                //blueTeamCount++;
+                if (redTeamCount < (maxTeamSize - 3))
+                {
+                    Minion redMinion = Instantiate(Minions[0], SpawnPoints[0]).GetComponent<Minion>();
+                    redMinion.goal = GlobalRefs.blueNexus.transform;
+                    redMinion.transform.position = SpawnPoints[0].position;
+                    redMinion = Instantiate(Minions[1], SpawnPoints[1]).GetComponent<Minion>();
+                    redMinion.goal = GlobalRefs.blueNexus.transform;
+                    redMinion.transform.position = SpawnPoints[1].position;
+                    redMinion = Instantiate(Minions[2], SpawnPoints[2]).GetComponent<Minion>();
+                    redMinion.goal = GlobalRefs.blueNexus.transform;
+                    redMinion.transform.position = SpawnPoints[2].position;
+                    redTeamCount += 3;
+                }
+                if (blueTeamCount < (maxTeamSize - 3))
+                {
+                    Minion blueMinion = Instantiate(Minions[3], SpawnPoints[3]).GetComponent<Minion>();
+                    blueMinion.goal = GlobalRefs.redNexus.transform;
+                    blueMinion.transform.position = SpawnPoints[3].position;
+                    blueMinion = Instantiate(Minions[4], SpawnPoints[4]).GetComponent<Minion>();
+                    blueMinion.goal = GlobalRefs.redNexus.transform;
+                    blueMinion.transform.position = SpawnPoints[4].position;
+                    blueMinion = Instantiate(Minions[5], SpawnPoints[5]).GetComponent<Minion>();
+                    blueMinion.goal = GlobalRefs.redNexus.transform;
+                    blueMinion.transform.position = SpawnPoints[5].position;
+                    blueTeamCount += 3;
+                }
             }
-            //GameObject redMinion = Instantiate(Minions[0], SpawnPoints[0]);
-            //redMinion.transform.position = SpawnPoints[0].position;
-            Debug.Log(SpawnPoints[0].transform.position);
-
-            
             timer = spawnTimer;
         }
-
         timer -= Time.deltaTime;
 	}
 }
