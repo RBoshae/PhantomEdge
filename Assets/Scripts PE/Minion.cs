@@ -15,6 +15,10 @@ public abstract class Minion : MonoBehaviour {
     private Transform _goal;
     [SerializeField]
     private ParticleSystem DestroyParticles;
+    [SerializeField]
+    private float ApproachRadius = 4;
+    [SerializeField]
+    private float AtackRadius = 1;
     public Teams team;
     public Animator anim;
     public NavMeshAgent agent;
@@ -117,6 +121,35 @@ public abstract class Minion : MonoBehaviour {
             state = MinionState.walking;
             agent.enabled = true;
             anim.speed = InitialAnimatorSpeed;
+        }
+        CheckNearbyEnemies();
+    }
+
+    private void CheckNearbyEnemies()
+    {
+        // Get all gameobjects within ApproachRadius distance
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, ApproachRadius);
+        float minDist = Mathf.Infinity;
+        foreach (Collider hit in hitColliders)
+        {
+            // if you find a player, immediately shoot at him (high priority over minions)
+            MainPlayer player = hit.GetComponent<MainPlayer>();
+            if (player)
+            {
+                goal = player.transform;
+                return;
+            }
+            // Check the closest minion out of all minions closeby
+            Minion minion = hit.GetComponent<Minion>();
+            if (minion)
+            {
+                float curDist = Vector3.Distance(minion.transform.position, transform.position);
+                if (curDist < minDist)
+                {
+                    minDist = curDist;
+                    goal = minion.transform;
+                }
+            }
         }
     }
 
