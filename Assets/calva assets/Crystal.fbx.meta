@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a44fd05513ea0554d837294adf10d432
-timeCreated: 1528836674
+timeCreated: 1528845258
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -11,7 +11,7 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Crystal
-    7400000: Take 001
+    7400000: Float
     9500000: //RootNode
   externalObjects: {}
   materials:
