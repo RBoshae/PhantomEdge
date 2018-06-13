@@ -13,6 +13,7 @@ public class Nexus : BaseObject {
                 break;
             case Teams.blue:
                 GlobalRefs.blueNexus = this;
+                print("added myself: "+GlobalRefs.blueNexus.gameObject.name);
                 break;
             default:
                 Debug.LogError("Nexus "+gameObject.name+" Team not assigned.");

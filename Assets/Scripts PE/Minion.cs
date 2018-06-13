@@ -14,8 +14,6 @@ public abstract class Minion : MonoBehaviour {
     [SerializeField]
     private Transform _goal;
     [SerializeField]
-    string goalname;
-    [SerializeField]
     private ParticleSystem DestroyParticles;
     public Teams team;
     public Animator anim;
@@ -70,13 +68,26 @@ public abstract class Minion : MonoBehaviour {
         
     }
 
+    public void FollowNexus()
+    {
+        switch (team)
+        {
+            case Teams.red:
+                goal = GlobalRefs.blueNexus.transform;
+                break;
+            case Teams.blue:
+                goal = GlobalRefs.redNexus.transform;
+                break;
+            default:
+                break;
+        }
+    }
+
     protected void IsOnNavMesh(NavMeshAgent agent)
     {
         NavMeshHit hit;
-
-        if (NavMesh.SamplePosition(this.GetComponentInParent<Transform>().position, out hit, 2, agent.areaMask))
+        if (NavMesh.SamplePosition(transform.parent.parent.position, out hit, 4, NavMesh.AllAreas))
         {
-            Debug.Log("Closest navmesh: " + hit.position);
             agent.Warp(hit.position);
         }
         else
@@ -85,14 +96,15 @@ public abstract class Minion : MonoBehaviour {
         }
     }
 
-    protected void Start()
+    protected void Awake()
     {
         CurrentHP = MaxHP;
         agent = GetComponent<NavMeshAgent>();
         IsOnNavMesh(agent);
-        
+        agent.destination = _goal.position;
+
         anim = transform.parent.GetComponent<Animator>();
-        state = MinionState.attacking;
+        state = MinionState.walking;
         rb = GetComponent<Rigidbody>();
         InitialAnimatorSpeed = anim.speed;
     }
@@ -116,20 +128,5 @@ public abstract class Minion : MonoBehaviour {
             yield return null;
         }
         Destroy(this.gameObject);
-    }
-
-    private void FollowNexus()
-    {
-        switch (team)
-        {
-            case Teams.red:
-                goal = GlobalRefs.blueNexus.transform;
-                break;
-            case Teams.blue:
-                goal = GlobalRefs.redNexus.transform;
-                break;
-            default:
-                break;
-        }
     }
 }

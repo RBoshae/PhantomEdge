@@ -401,7 +401,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1627049331407036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 194.47417, y: -88.878944, z: -16.436218}
+  m_LocalPosition: {x: 63.047638, y: -40.865753, z: 179.3562}
   m_LocalScale: {x: 2.409215, y: 2.4092147, z: 2.4092147}
   m_Children:
   - {fileID: 4034893463617184}
@@ -772,7 +772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHP: 0
   MaxHP: 0
-  _goal: {fileID: 0}
+  _goal: {fileID: 4490160075080360, guid: 24904600dc4bbfc4d8d3a9c702fd3179, type: 2}
   goalname: BlueNexus
   DestroyParticles: {fileID: 0}
   team: 0
@@ -873,7 +873,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 5
+  m_Speed: 148.85
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
