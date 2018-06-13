@@ -11,6 +11,12 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
+  - name: BotLane
+    cost: 0.5
+  - name: MidLane
+    cost: 0.5
+  - name: TopLane
+    cost: 0.5
   - name: 
     cost: 1
   - name: 
@@ -63,18 +69,12 @@ NavMeshProjectSettings:
     cost: 1
   - name: 
     cost: 1
-  - name: 
-    cost: 1
-  - name: 
-    cost: 1
-  - name: 
-    cost: 1
-  m_LastAgentTypeID: -887442657
+  m_LastAgentTypeID: -1372625422
   m_Settings:
   - serializedVersion: 2
     agentTypeID: 0
     agentRadius: 0.5
-    agentHeight: 2
+    agentHeight: 0.5
     agentSlope: 45
     agentClimb: 0.75
     ledgeDropHeight: 0

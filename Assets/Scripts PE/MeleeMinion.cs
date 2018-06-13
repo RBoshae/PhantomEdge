@@ -1,13 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class MeleeMinion : Minion {
 
-	// Use this for initialization
+
+
+    [SerializeField]
+    public Transform goal;
+    [SerializeField]
+    string goalname;
+    // Use this for initialization
+
+    void IsOnNavMesh(NavMeshAgent agent)
+    {
+        NavMeshHit hit;
+        
+        if(NavMesh.SamplePosition(this.GetComponentInParent<Transform>().position,  out hit, 2, agent.areaMask))
+        {
+            Debug.Log("Closest navmesh: " + hit.position);
+            agent.Warp(hit.position);
+        }
+        else
+        {
+            Debug.Log("Navmesh Not found");
+        }
+    }
+
+
     void Start () {
-		
-	}
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+
+        IsOnNavMesh(agent);
+
+        goal = GameObject.Find(goalname).transform;
+        agent.destination = goal.position;
+    }
     //Constructor for melee minion
     public MeleeMinion(float hp, float maxhp)
     {
@@ -26,6 +54,8 @@ public class MeleeMinion : Minion {
         }
         
     }
+    
+    
     public override void ApplyDamage(float damage = 0)
     {
 

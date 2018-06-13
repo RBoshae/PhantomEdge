@@ -8,10 +8,18 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     GameObject[] Minions;
     [SerializeField]
-    Transform SpawnPoint;
+    Transform[] SpawnPoints;
     [SerializeField]
-    float spawnTimer;
-	void Start () {
+    float spawnTimer = 3;
+    [SerializeField]
+    float timer;
+    [SerializeField]
+    int groupSize = 5;
+    public int redTeamCount;
+    public int blueTeamCount;
+
+    void Start () {
+        timer = spawnTimer;
 		if(Minions.Length == 0)
         {
             Application.Quit();
@@ -21,11 +29,26 @@ public class Spawner : MonoBehaviour {
 	// Update is called once per frame
     //Spawns a minion every spawnTimer seconds. at the referenced spawnpoint
 	void Update () {
-        float timer = spawnTimer;
-        while(timer > 0)
+        
+        if(timer <= 0)
         {
-            timer -= Time.deltaTime;
+            //for(int i = 0; i < groupSize; i++)
+            //{
+            //    GameObject redMinion = Instantiate(Minions[0], SpawnPoints[0]);
+            //    redMinion = Instantiate(Minions[1], SpawnPoints[1]);
+            //    redMinion = Instantiate(Minions[2], SpawnPoints[2]);
+            //    redTeamCount++;
+            //    
+            //    //GameObject blueMinion = Instantiate(Minions[1], SpawnPoints[1]);
+            //    //blueTeamCount++;
+            //}
+            GameObject redMinion = Instantiate(Minions[0], SpawnPoints[0]);
+            //Debug.Log(SpawnPoints[0].transform.position);
+
+            redMinion.transform.position = SpawnPoints[0].position;
+            timer = spawnTimer;
         }
-        GameObject m = Instantiate(Minions[0], SpawnPoint);
+
+        timer -= Time.deltaTime;
 	}
 }
