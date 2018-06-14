@@ -39,6 +39,8 @@ public class Sword : MonoBehaviour {
         {
             collision.gameObject.GetComponent<Nexus>().ApplyDamage(Damage);
         }
+        AudioSource sound = GetComponent<AudioSource>();
+        sound.Play();
 
     }
     
