@@ -65,5 +65,6 @@ public class MainPlayer : MonoBehaviour {
         Teleport(GlobalRefs.PlayerRoomSpawn.position, GlobalRefs.PlayerRoomSpawn.rotation, false, new Color(0.2f, 0, 0));
         HP = MaxHP;
         BloodyPeripheral.color = new Color(1, 1, 1, 0);
+
     }
 }
