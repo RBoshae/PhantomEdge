@@ -16,4 +16,5 @@ public static class GlobalRefs {
     public static List<Text> PlayerViewText = new List<Text>();
     public static GameObject Gun;
     public static GameObject Sword;
+    public static ParticleSystem Explosion;
 }

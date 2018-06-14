@@ -51,5 +51,6 @@ public class Nexus : BaseObject {
         {
             text.text = "Team " + winningTeam + " won!";
         }
+        GlobalRefs.Player.GoToRoom();
     }
 }

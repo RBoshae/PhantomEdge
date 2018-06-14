@@ -33,7 +33,8 @@ public abstract class Minion : MonoBehaviour {
     public bool locked = false;
     protected Rigidbody rb;
     protected float InitialAnimatorSpeed;
-
+    [SerializeField]
+    Transform currentDestination;
     public Transform goal
     {
         get {
@@ -42,6 +43,7 @@ public abstract class Minion : MonoBehaviour {
         set {
             _goal = value;
             agent.destination = value.localPosition;
+            //currentDestination.position = value.localPosition;
         }
     }
 
@@ -58,6 +60,7 @@ public abstract class Minion : MonoBehaviour {
         InitialAnimatorSpeed = anim.speed;
         CenterGoal = _goal;
         GetGoalNexus();
+        DestroyParticles = GlobalRefs.Explosion;
     }
 
     public bool ApplyDamage(int damage = 0)
@@ -233,10 +236,13 @@ public abstract class Minion : MonoBehaviour {
     protected IEnumerator DeathAnimation()
     {
         float startTime = Time.time;
+        DestroyParticles.transform.position = transform.position;
+        DestroyParticles.Play();
         while ((Time.time - startTime) < DestroyParticles.main.duration)
         {
             yield return null;
         }
+        DestroyParticles.Stop();
         Destroy(this.gameObject);
     }
 }

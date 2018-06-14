@@ -47,7 +47,10 @@ public class MainPlayer : MonoBehaviour {
     }
     
     void Update () {
-        //if (Input.GetKeyDown(KeyCode.Semicolon)) { Damage(3, 0.5f); }
+        if (Input.GetKeyDown(KeyCode.Semicolon) || OVRInput.GetDown(OVRInput.Button.Two))
+        {
+            Teleport(GlobalRefs.PlayerRoomSpawn.position, GlobalRefs.PlayerRoomSpawn.rotation, false, new Color(0.2f, 0, 0));
+        }
     }
 
     private void Teleport(Vector3 position, Quaternion rotation, bool forceDestination, Color fadeColor)
@@ -55,5 +58,12 @@ public class MainPlayer : MonoBehaviour {
         Teleporter.blinkToColor = fadeColor;
         Teleporter.Teleport(transform, position, rotation, forceDestination);
         Teleporter.blinkToColor = Color.black;
+    }
+
+    public void GoToRoom()
+    {
+        Teleport(GlobalRefs.PlayerRoomSpawn.position, GlobalRefs.PlayerRoomSpawn.rotation, false, new Color(0.2f, 0, 0));
+        HP = MaxHP;
+        BloodyPeripheral.color = new Color(1, 1, 1, 0);
     }
 }
