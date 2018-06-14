@@ -41,22 +41,34 @@ public class Spawner : MonoBehaviour {
             {
                 if (redTeamCount < (maxTeamSize - 3))
                 {
-                    Minion redMinion = Instantiate(Minions[0], SpawnPoints[0]).transform.GetChild(0).GetComponent<Minion>();
+                    Minion redMinion = Instantiate(Minions[0], null).transform.GetChild(0).GetComponent<Minion>();
                     redMinion.transform.position = SpawnPoints[0].position;
-                    redMinion = Instantiate(Minions[1], SpawnPoints[1]).transform.GetChild(0).GetComponent<Minion>();
+                    redMinion.MySpawnPoint = SpawnPoints[0];
+                    redMinion.CustomAwake();
+                    redMinion = Instantiate(Minions[1], null).transform.GetChild(0).GetComponent<Minion>();
                     redMinion.transform.position = SpawnPoints[1].position;
-                    redMinion = Instantiate(Minions[2], SpawnPoints[2]).transform.GetChild(0).GetComponent<Minion>();
+                    redMinion.MySpawnPoint = SpawnPoints[1];
+                    redMinion.CustomAwake();
+                    redMinion = Instantiate(Minions[2], null).transform.GetChild(0).GetComponent<Minion>();
                     redMinion.transform.position = SpawnPoints[2].position;
+                    redMinion.MySpawnPoint = SpawnPoints[2];
+                    redMinion.CustomAwake();
                     redTeamCount += 3;
                 }
                 if (blueTeamCount < (maxTeamSize - 3))
                 {
-                    Minion blueMinion = Instantiate(Minions[3], SpawnPoints[3]).transform.GetChild(0).GetComponent<Minion>();
+                    Minion blueMinion = Instantiate(Minions[3], null).transform.GetChild(0).GetComponent<Minion>();
                     blueMinion.transform.position = SpawnPoints[3].position;
-                    blueMinion = Instantiate(Minions[4], SpawnPoints[4]).transform.GetChild(0).GetComponent<Minion>();
+                    blueMinion.MySpawnPoint = SpawnPoints[3];
+                    blueMinion.CustomAwake();
+                    blueMinion = Instantiate(Minions[4], null).transform.GetChild(0).GetComponent<Minion>();
                     blueMinion.transform.position = SpawnPoints[4].position;
-                    blueMinion = Instantiate(Minions[5], SpawnPoints[5]).transform.GetChild(0).GetComponent<Minion>();
+                    blueMinion.MySpawnPoint = SpawnPoints[4];
+                    blueMinion.CustomAwake();
+                    blueMinion = Instantiate(Minions[5], null).transform.GetChild(0).GetComponent<Minion>();
                     blueMinion.transform.position = SpawnPoints[5].position;
+                    blueMinion.MySpawnPoint = SpawnPoints[5];
+                    blueMinion.CustomAwake();
                     blueTeamCount += 3;
                 }
             }

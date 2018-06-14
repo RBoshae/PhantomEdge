@@ -12,19 +12,27 @@ public abstract class Minion : MonoBehaviour {
     [SerializeField]
     protected float MaxHP = 2;
     [SerializeField]
-    private Transform _goal;
+    protected Transform _goal;
     [SerializeField]
-    private ParticleSystem DestroyParticles;
+    protected Transform CenterGoal;
     [SerializeField]
-    private float ApproachRadius = 4;
+    protected Transform GoalNexus;
     [SerializeField]
-    private float AtackRadius = 1;
+    protected Transform MyNexus;
+    [SerializeField]
+    protected ParticleSystem DestroyParticles;
+    [SerializeField]
+    protected float ApproachRadius = 8;
+    [SerializeField]
+    protected float AttackRadius = 1;
+    public Transform MySpawnPoint;
     public Teams team;
     public Animator anim;
     public NavMeshAgent agent;
     public MinionState state;
-    private Rigidbody rb;
-    private float InitialAnimatorSpeed;
+    public bool locked = false;
+    protected Rigidbody rb;
+    protected float InitialAnimatorSpeed;
 
     public Transform goal
     {
@@ -35,6 +43,21 @@ public abstract class Minion : MonoBehaviour {
             _goal = value;
             agent.destination = value.localPosition;
         }
+    }
+
+    public void CustomAwake()
+    {
+        CurrentHP = MaxHP;
+        agent = GetComponent<NavMeshAgent>();
+        IsOnNavMesh(agent);
+        agent.destination = _goal.position;
+
+        anim = transform.parent.GetComponent<Animator>();
+        state = MinionState.walking;
+        rb = GetComponent<Rigidbody>();
+        InitialAnimatorSpeed = anim.speed;
+        CenterGoal = _goal;
+        GetGoalNexus();
     }
 
     public bool ApplyDamage(int damage = 0)
@@ -72,25 +95,42 @@ public abstract class Minion : MonoBehaviour {
         
     }
 
-    public void FollowNexus()
+    protected void GetGoalNexus()
     {
         switch (team)
         {
             case Teams.red:
-                goal = GlobalRefs.blueNexus.transform;
+                MyNexus = GlobalRefs.redNexus.transform;
+                GoalNexus = GlobalRefs.blueNexus.transform;
                 break;
             case Teams.blue:
-                goal = GlobalRefs.redNexus.transform;
+                MyNexus = GlobalRefs.blueNexus.transform;
+                GoalNexus = GlobalRefs.redNexus.transform;
                 break;
             default:
                 break;
         }
     }
 
+    public void FollowNexus()
+    {
+        float myDistToMyNexus = Vector3.Distance(transform.position, MyNexus.position);
+        float CenterDistToMyNexus = Vector3.Distance(CenterGoal.position, MyNexus.position);
+        if (myDistToMyNexus >= CenterDistToMyNexus || Mathf.Abs(myDistToMyNexus - CenterDistToMyNexus) < 10)
+        {
+            goal = GoalNexus;
+        }
+        else
+        {
+            goal = CenterGoal;
+        }
+        state = MinionState.walking;
+    }
+
     protected void IsOnNavMesh(NavMeshAgent agent)
     {
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(transform.parent.parent.position, out hit, 4, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(MySpawnPoint.position, out hit, 4, NavMesh.AllAreas))
         {
             agent.Warp(hit.position);
         }
@@ -100,57 +140,94 @@ public abstract class Minion : MonoBehaviour {
         }
     }
 
-    protected void Awake()
+    protected void Update()
     {
-        CurrentHP = MaxHP;
-        agent = GetComponent<NavMeshAgent>();
-        IsOnNavMesh(agent);
-        agent.destination = _goal.position;
-
-        anim = transform.parent.GetComponent<Animator>();
-        state = MinionState.walking;
-        rb = GetComponent<Rigidbody>();
-        InitialAnimatorSpeed = anim.speed;
-    }
-
-    private void Update()
-    {
-        // Start walking again once knockback has stopped
-        if (state == MinionState.knockback && rb.velocity == Vector3.zero)
+        if (!locked)
         {
-            state = MinionState.walking;
-            agent.enabled = true;
-            anim.speed = InitialAnimatorSpeed;
-        }
-        CheckNearbyEnemies();
-    }
-
-    private void CheckNearbyEnemies()
-    {
-        // Get all gameobjects within ApproachRadius distance
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, ApproachRadius);
-        float minDist = Mathf.Infinity;
-        foreach (Collider hit in hitColliders)
-        {
-            // if you find a player, immediately shoot at him (high priority over minions)
-            MainPlayer player = hit.GetComponent<MainPlayer>();
-            if (player)
+            // Start walking again once knockback has stopped
+            if (state == MinionState.knockback && rb.velocity == Vector3.zero)
             {
-                goal = player.transform;
-                return;
+                state = MinionState.walking;
+                agent.enabled = true;
+                anim.speed = InitialAnimatorSpeed;
             }
-            // Check the closest minion out of all minions closeby
-            Minion minion = hit.GetComponent<Minion>();
-            if (minion && minion.team != team)
+            CheckNearbyEnemies();
+        }
+        transform.GetComponentInChildren<SphereCollider>().transform.position = goal.position;
+    }
+
+    protected void CheckNearbyEnemies()
+    {
+        if  (state == MinionState.walking || state == MinionState.approaching)
+        {
+            // Get all gameobjects within ApproachRadius distance
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, ApproachRadius);
+            float minDist = Mathf.Infinity;
+            foreach (Collider hit in hitColliders)
             {
-                float curDist = Vector3.Distance(minion.transform.position, transform.position);
-                if (curDist < minDist)
+                // if you find a player, immediately shoot at him (high priority over minions)
+                MainPlayer player = hit.GetComponent<MainPlayer>();
+                if (player)
                 {
-                    minDist = curDist;
-                    goal = minion.transform;
+                    if (state == MinionState.approaching && Vector3.Distance(player.transform.position, transform.position) <= AttackRadius)
+                    {
+                        goal = player.transform;
+                        agent.speed = 0;
+                        state = MinionState.attacking;
+                    }
+                    else
+                    {
+                        goal = player.transform;
+                        state = MinionState.approaching;
+                    }
+                    return;
+                }
+                // Check the closest minion out of all minions closeby
+                Minion minion = hit.GetComponent<Minion>();
+                if (minion && !minion.locked && minion.state == MinionState.walking && minion.team != team)
+                {
+                    minion.locked = true;
+                    float curDist = Vector3.Distance(minion.transform.position, transform.position);
+                    if (minion.state == MinionState.walking && curDist <= AttackRadius)
+                    {
+                        goal = minion.transform;
+                        agent.speed = 0;
+                        state = MinionState.attacking;
+                        minion.AttackMe(this);
+                        return;
+                    }
+                    else if (minion.state == MinionState.walking && curDist < minDist)
+                    {
+                        minDist = curDist;
+                        goal = minion.transform;
+                        minion.ApproachMe(this);
+                        state = MinionState.approaching;
+                    }
+                    minion.locked = false;
                 }
             }
+            if (minDist != Mathf.Infinity)
+            {
+                return;
+            }
+            else
+            {
+                FollowNexus();
+            }
         }
+    }
+
+    protected void ApproachMe(Minion minion)
+    {
+        state = MinionState.approaching;
+        goal = minion.transform;
+    }
+
+    protected void AttackMe(Minion minion)
+    {
+        state = MinionState.attacking;
+        goal = minion.transform;
+        agent.speed = 0;
     }
 
     protected IEnumerator DeathAnimation()

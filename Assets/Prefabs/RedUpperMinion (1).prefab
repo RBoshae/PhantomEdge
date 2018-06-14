@@ -402,7 +402,7 @@ Transform:
   m_GameObject: {fileID: 1637140161896006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 63.047638, y: -40.865753, z: 179.3562}
-  m_LocalScale: {x: 2.409215, y: 2.4092147, z: 2.4092147}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_Children:
   - {fileID: 4082617439163636}
   m_Father: {fileID: 0}
@@ -773,12 +773,18 @@ MonoBehaviour:
   CurrentHP: 0
   MaxHP: 0
   _goal: {fileID: 4473183962847512, guid: 655b21877b076d44baae67ae964c1b9e, type: 2}
-  goalname: BlueNexus
+  CenterGoal: {fileID: 0}
+  GoalNexus: {fileID: 0}
+  MyNexus: {fileID: 0}
   DestroyParticles: {fileID: 0}
+  ApproachRadius: 8
+  AttackRadius: 2
+  MySpawnPoint: {fileID: 0}
   team: 0
   anim: {fileID: 0}
   agent: {fileID: 0}
   state: 0
+  locked: 0
 --- !u!135 &135961180843810152
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -873,7 +879,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 148.85
+  m_Speed: 80
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
